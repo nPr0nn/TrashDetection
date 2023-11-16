@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# folders
+Datasets/
+
 # C extensions
 *.so
 
@@ -136,7 +139,6 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-Datasets/
 /site
 
 # mypy
