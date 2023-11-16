@@ -1,0 +1,10 @@
+numpy
+opencv-python
+ultralytics
+tdqm
+matplotlib
+seaborn
+fabric
+pathlib
+moviepy
+imutils
