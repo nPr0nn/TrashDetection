@@ -25,7 +25,7 @@ def predict_images(images_paths, files_names, predictions_folder_path, model_pat
         # save whole image 
         segmented_image_output_path = os.path.join(predictions_folder_path, file_name)
         print(segmented_image_output_path)
-        # cv2.imwrite(segmented_image_output_path, segmented_image)
+        cv2.imwrite(segmented_image_output_path, segmented_image)
                     
 def run_prediction(images_folder_path, predictions_folder_path, model_path, show=False):
     images_paths, files_names = cv.read_all_images(images_folder_path) 
