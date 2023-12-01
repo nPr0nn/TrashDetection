@@ -33,4 +33,4 @@ def PredictImages(images_folder_path=None, output_folder_path=None, model_path=N
     output_folder_path = cv.read_folder_path(output_folder_path)
     model_path         = cv.read_file_path(model_path)
     
-    model_predict.run_prediction(images_folder_path, output_folder_path, model_path, show=True)
+    model_predict.run_prediction(images_folder_path, output_folder_path, model_path, show=False)
