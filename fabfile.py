@@ -8,12 +8,16 @@ from src.computer_vision import cv
 from src import model_predict
 from src import model_train
 
+drive_path = '/content/drive/Shareddrives/MC886 - Projeto Final'
+dataset_path = drive_path + '/Trash Detection Dataset'
+result_path = drive_path + '/Resultados'
+git_path = '/content/TrashDetection'
+model_path = drive_path + '/yolov8n-seg.pt'
+
 @task
-def TrainModel(c, dataset_folder_path=None, output_model_path=None):
-    if dataset_folder_path == None:
-        dataset_folder_path = "/home/lucas/Documentos/Universidade/Disciplinas/MC886/ProjetoFinal/TrashDetection/Datasets/TrashDetectionDataset"
-    if output_model_path == None:
-        output_model_path   = "runs" 
+def TrainModel(c):
+    dataset_folder_path = dataset_path
+    output_model_path   = result_path 
 
     dataset_folder_path = cv.read_folder_path(dataset_folder_path)
     output_model_path   = cv.read_folder_path(output_model_path)
@@ -21,13 +25,9 @@ def TrainModel(c, dataset_folder_path=None, output_model_path=None):
     model_train.run_training(dataset_folder_path, output_model_path) 
     
 @task
-def PredictImages(c, images_folder_path=None, output_folder_path=None, model_path=None):
-    if images_folder_path == None:
-        images_folder_path = "/home/lucas/Documentos/Universidade/Disciplinas/MC886/ProjetoFinal/TrashDetection/Datasets/TrashDetectionDataset/test/images"
-    if output_folder_path == None:
-        output_folder_path = "/home/lucas/Documentos/Universidade/Disciplinas/MC886/ProjetoFinal/TrashDetection/results/test1" 
-    if model_path == None:
-        model_path         = "/home/lucas/Documentos/Universidade/Disciplinas/MC886/ProjetoFinal/TrashDetection/runs/segment/train5/weights/best.pt"
+def PredictImages(c):
+    images_folder_path = dataset_path
+    output_folder_path = result_path
 
     images_folder_path = cv.read_folder_path(images_folder_path)
     output_folder_path = cv.read_folder_path(output_folder_path)
