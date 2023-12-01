@@ -5,7 +5,6 @@ __pycache__/
 
 # folders
 Datasets/
-results/
 
 # C extensions
 *.so

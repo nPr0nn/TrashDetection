@@ -16,18 +16,13 @@ def predict_masks(model, img, conf):
     probs = result.boxes.conf.cpu().numpy()
     boxes = result.boxes.xyxy.cpu().numpy() 
 
-    class_names = ['Glass', 'Metal', 'Paper', 'Plastic', 'Waste']
-    masks_names = []
-    
     # segmentation    
     if hasattr(result.masks, 'data'):
         masks = result.masks.data.cpu().numpy()
-        class_names = ['Glass', 'Metal', 'Paper', 'Plastic', 'Waste']
-        masks_names = [class_names[int(x)] for x in cls] 
     else:
         masks = []
 
-    return boxes, masks, masks_names, cls, probs
+    return boxes, masks, cls, probs
 
 # Draw nice colored overlay over the image 
 def overlay_mask(image, mask, color, alpha):
@@ -44,14 +39,10 @@ def overlay_mask(image, mask, color, alpha):
 
     return image_combined
 
-def filter_masks(masks, masks_names, p=0.5):
+def filter_masks(masks, p=0.5):
     filtered_masks = []
-    filtered_masks_names = []
     
-    for i in range(len(masks)):
-        mask = masks[i]
-        mask_name = masks_names[i]
-        
+    for mask in masks: 
         mask = mask.astype(np.uint8)
         contours, _   = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
        
@@ -64,9 +55,8 @@ def filter_masks(masks, masks_names, p=0.5):
         filtered_mask = cv2.drawContours(filtered_mask, filtered_contours, -1, 255, thickness=cv2.FILLED) 
 
         filtered_masks.append(filtered_mask)
-        filtered_masks_names.append(mask_name)
-        
-    return filtered_masks, filtered_masks_names
+
+    return filtered_masks
 
 def segment_image(image, model_path, new_shape):
     model         = YOLO(model_path) 
@@ -75,9 +65,8 @@ def segment_image(image, model_path, new_shape):
     image_resized = cv.resize_to(image, model_input_size)
 
     # Get important stuff
-    boxes, masks, masks_names, cls, probs = predict_masks(model, image_resized, conf=0.25)
-    masks, masks_names = filter_masks(masks, masks_names)
-    print(masks_names)
+    boxes, masks, cls, probs = predict_masks(model, image_resized, conf=0.25)
+    # masks = filter_masks(masks)
     masks_colors = cv.generate_palette(len(masks)) 
 
     image_segments = []
@@ -103,7 +92,6 @@ def segment_image(image, model_path, new_shape):
     # draw labels 
     for i in range(len(label_centers)):
         cm = label_centers[i]
-        name = masks_names[i]
-        image_segmented = cv.draw_text(image_segmented, cm, name, (255, 255, 255), 0.5, 1)
+        image_segmented = cv.draw_number(image_segmented, cm, 15, i, (255, 255, 255), 0.5, 1)
     
     return image_segmented, image_segments

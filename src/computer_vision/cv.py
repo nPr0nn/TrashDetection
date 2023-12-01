@@ -239,18 +239,4 @@ def draw_number(image, center, radius, number, color=(0,255,0), font_scale=0.5, 
 
     return result_image
 
-def draw_text(image, center, text, color=(0, 255, 0), font_scale=0.5, font_thickness=1, rectangle_thickness=-1):
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    # Create a copy of the input image
-    result_image = np.copy(image)
-    text_size = cv2.getTextSize(text, font, font_scale, font_thickness)[0]
 
-    text_position = (center[0] - text_size[0] // 2, center[1] + text_size[1] // 2)
-
-    # Draw a rectangle around the text
-    rectangle_start = (text_position[0] - 5, text_position[1] - text_size[1] - 5)
-    rectangle_end = (text_position[0] + text_size[0] + 5, text_position[1] + 5)
-    cv2.rectangle(result_image, rectangle_start, rectangle_end, (0,0,0), rectangle_thickness)
-
-    cv2.putText(result_image, text, text_position, font, font_scale, color, font_thickness)
-    return result_image
