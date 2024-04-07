@@ -5,3 +5,7 @@ Welcome to the GitHub repository for our final project in the Machine Learning c
 # Dataset
 
 In order to train our model we used the Trash Dataset for Oriented Bounded Box (2023), present on the link: https://universe.roboflow.com/trash-dataset-for-oriented-bounded-box/trash-detection-1fjjc
+
+## Video Presentation  
+
+https://www.youtube.com/watch?v=bO6yBUW8nCA&t=44s
